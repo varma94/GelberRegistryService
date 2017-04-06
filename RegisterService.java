@@ -4,42 +4,59 @@ import java.util.*;
 
 class RegisterService {
 
-	int minutesProcessed;
-	Customer c;
-	Deque<Customer> queue = new LinkedList<Customer>();
-	private int isTrainee;
-    int noOfItems;
+	private Customer customer;
+	private Deque<Customer> queue = new LinkedList<Customer>();
+	private boolean isTrainee;
+    private int noOfItems, processingTimeForCustomer;
+     
    
-    RegisterService(int isTrainee){
+    RegisterService(boolean isTrainee){
     	this.isTrainee = isTrainee;
     }
    	
-	void setIsTrainee(int b){
-		this.isTrainee = b;
+	void setIsTrainee(boolean isTrainee){
+		this.isTrainee = isTrainee;
+	}
+	
+	public Deque<Customer> getCustomerQueueForRegister() {
+	      return queue;
+	}
+	
+	  
+	public int getProcessingTimeForCustomer() {
+	      return processingTimeForCustomer;
 	}
 
-	void setCustomer(Customer c){
-		this.c = c;
-		this.noOfItems = c.noOfItems;
+    public void setProcessingTimeForCustomer(int processingTimeForCustomer) {
+	     this.processingTimeForCustomer = processingTimeForCustomer;
+	}
+    
+	public int getNoOfItems() {
+	      return noOfItems;
 	}
 
-	void decrementItems(){
-		//checkIfItemsAreZero();
-	    this.minutesProcessed++;
-		if(isTrainee!=1){
+	public void setNoOfItems(int noOfItems) {
+	     this.noOfItems = noOfItems;
+	}
+	    
+	void setCustomer(Customer customer){
+		this.customer = customer;
+		this.noOfItems = customer.getNoOfItems();
+	}
+	
+	Customer getCustomer(){
+		return this.customer;
+	}
+
+	void processItems(){
+		
+		this.processingTimeForCustomer++;
+		if(!isTrainee){
 		  this.noOfItems--;
-	    }else if((minutesProcessed%2)==0){
+	    }else if((processingTimeForCustomer%2)==0){
           this.noOfItems--;
 	    }
+		
 	}
 
-//	void checkIfItemsAreZero(){
-//		if(this.noOfItems==0){
-//			if(queue.peek()!=null){
-//			 this.c = queue.poll();
-//			 this.noOfItems = c.noOfItems;
-//			 this.minutesProcessed = 0;
-//			}
-//		}
-//	}
 }
